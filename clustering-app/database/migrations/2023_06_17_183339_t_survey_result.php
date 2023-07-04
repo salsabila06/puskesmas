@@ -15,12 +15,12 @@ return new class extends Migration
             $table->id('id_survey_result');
             $table->bigInteger('survey_id');
             $table->bigInteger('faskes_id');
-            $table->bigInteger('quest_id');
+            $table->bigInteger('quest_type_id');
             $table->string('value_real');
             $table->string('value_percentage');
             $table->string('quest_count');
             $table->timestamps();
-            $table->bigInteger('created_by'); 
+            $table->bigInteger('created_by');
         });
     }
 

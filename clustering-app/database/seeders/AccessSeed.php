@@ -54,6 +54,11 @@ class AccessSeed extends Seeder
                 'menu_id' => ISI_SURVEY,
                 'role_id' => ROLE_FASKES
             ],
+            [
+
+                'menu_id' => PUSKESMAS,
+                'role_id' => ROLE_DINAS
+            ],
         ];
 
         Access::insert($access);

@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call([
-            DistrictSeed::class, FaskesTypeSeed::class, RoleSeed::class, FaskesSeed::class, UserSeed::class, MenuSeed::class, AccessSeed::class
+            DistrictSeed::class, FaskesTypeSeed::class, RoleSeed::class, FaskesSeed::class, UserSeed::class, MenuSeed::class, AccessSeed::class, ClusterTypeSeed::class
         ]);
     }
 }

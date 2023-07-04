@@ -39,4 +39,9 @@ class Faskes extends Model
 
         return $this->belongsTo(FaskesType::class, 'faskes_type_id');
     }
+
+    function user()
+    {
+        return $this->belongsTo(User::class, 'id_faskes', 'faskes_id');
+    }
 }

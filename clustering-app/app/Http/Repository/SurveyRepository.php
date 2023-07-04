@@ -2,9 +2,12 @@
 
 namespace App\Http\Repository;
 
+use App\Models\Cluster;
 use App\Models\Survey;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class SurveyRepository
 {
@@ -89,6 +92,45 @@ class SurveyRepository
     {
         try {
             return Survey::destroy($this->primaryKey);
+        } catch (\Throwable $th) {
+            throw new Exception($th->getMessage());
+        }
+    }
+
+    function surveyForFaskes()
+    {
+        try {
+            $faskes = Auth::user()->faskes_id;
+            array_push($this->select, DB::raw("CASE WHEN EXISTS(SELECT survey_id, faskes_id FROM t_survey_result WHERE survey_id = t_survey.id_survey AND faskes_id = '{$faskes}') THEN 1 ELSE 0 END AS status"));
+            $search = $this->search;
+            $this->order =  $this->request['columns'][$this->request['order.0.column']]['name'];
+            $this->sort = $this->request['order.0.dir'];
+
+            $data = Survey::when($this->search, function ($q) use ($search) {
+                $q->where('title', 'LIKE', "%{$search}%");
+            })->orderBy($this->order, $this->sort)->limit($this->limit)->offset($this->offset)->get($this->select);
+
+            $total_record = Survey::count();
+            $filtered_record = ($this->search) ? Survey::where('title', 'LIKE', "%{$search}%")->count() : $total_record;
+
+            return [
+                'data' => $data,
+                'recordsTotal' => $total_record,
+                'recordsFiltered' => $filtered_record,
+            ];
+        } catch (\Throwable $th) {
+            throw new Exception($th->getMessage());
+        }
+    }
+
+    function surveyWithCluster()
+    {
+        try {
+
+            $cluster = (new Cluster())->getTable();
+            $survey = (new Survey())->getTable();
+
+            return  Survey::join("{$cluster}", "{$cluster}.survey_id", "{$survey}.id_survey")->get([DB::raw("DISTINCT id_survey"), 'title']);
         } catch (\Throwable $th) {
             throw new Exception($th->getMessage());
         }

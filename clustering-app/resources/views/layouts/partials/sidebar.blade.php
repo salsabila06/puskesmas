@@ -7,7 +7,7 @@
              <a href="/">CT</a>
          </div>
          <ul class="sidebar-menu">
-
+             <li class="menu-header">Menu</li>
              @foreach ($sidebar as $item)
                  <li class="{{ request()->segment(1) == str_replace('/', '', $item->menu->menu_url) ? 'active' : '' }} ">
                      <a class="nav-link" href="{{ $item->menu->menu_url }}">

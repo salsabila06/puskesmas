@@ -26,7 +26,7 @@ const ajax = (url, data = []) => {
 };
 
 const getListDistrict = () => {
-    let district = $("#district");
+    let district = $(".district");
     ajax("/district").done((res) => {
         res.map((v, i) => {
             district.append(

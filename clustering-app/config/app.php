@@ -14,6 +14,7 @@ define('SURVEY', 4);
 define('DATA', 5);
 define('HASIL', 6);
 define('ISI_SURVEY', 7);
+define('PUSKESMAS', 8);
 
 
 define('SEMUA', 0);

@@ -13,24 +13,48 @@ class UserRepository
 {
 
     protected $request;
+    protected $fillable;
 
     public function __construct(Request $request)
     {
-        $this->request = [
+        $this->fillable = [
             'fullname' => $request->fullname,
             'username' => $request->username,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
             'faskes_id' => $request->faskes_id,
-            'role_id' => $request->role_id
         ];
+
+        if ($request->password) {
+            $this->fillable['password'] = Hash::make($request->password);
+        }
+
+        if ($request->role_id) {
+            $this->fillable['role_id'] = $request->role_id;
+        }
+        $this->request = $request;
     }
 
 
     public function create()
     {
         try {
-            return User::create($this->request);
+            return User::create($this->fillable);
+        } catch (\Throwable $th) {
+            throw new Exception($th->getMessage());
+        }
+    }
+    public function update()
+    {
+        try {
+            return User::find($this->request->user_id)->update($this->fillable);
+        } catch (\Throwable $th) {
+            throw new Exception($th->getMessage());
+        }
+    }
+    public function delete()
+    {
+        try {
+            return User::find($this->request->user_id)->delete();
         } catch (\Throwable $th) {
             throw new Exception($th->getMessage());
         }

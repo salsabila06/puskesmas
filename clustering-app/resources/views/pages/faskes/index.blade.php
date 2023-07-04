@@ -1,14 +1,15 @@
 @extends('layouts.app')
 
 @section('title')
-    Isi Survey
+    Puskesmas
 @endsection
 
 
 @section('content')
     <div class="card">
         <div class="card-header">
-            <h4>Table Survey</h4>
+            <h4>Table Puskesmas</h4>
+            <button class="btn btn-success ml-auto" data-target="#modal_add" data-toggle="modal">Tambah</button>
         </div>
         <div class="card-body">
             <div class="row">
@@ -17,8 +18,11 @@
                         <table id="table" width="100%">
                             <thead>
                                 <th>#</th>
-                                <th>Judul</th>
-                                <th>Tanggal Terbit</th>
+                                <th>Nama Puskesmas</th>
+                                <th>Tipe Puskesmas</th>
+                                <th>Kecamatan</th>
+                                <th>PIC</th>
+                                <th>Tanggal Dibangun</th>
                                 <th>Aksi</th>
                             </thead>
                         </table>
@@ -31,8 +35,9 @@
 
 
     @push('js')
-        <script src="{{ asset('assets/js/isi_survey.js') }}"></script>
+        <script src="{{ asset('assets/js/faskes.js') }}"></script>
     @endpush
 @endsection
 
-@include('pages.input_survey.partials.modal_result')
+@include('pages.faskes.partials.modal_add')
+@include('pages.faskes.partials.modal_edit')

@@ -66,7 +66,7 @@
                                         </tr>
 
                                         @php
-                                            
+
                                             $data = \Illuminate\Support\Arr::where($survey->quest, function ($value) use ($item) {
                                                 return $value->quest_type_id == $item['id_quest_type'];
                                             });
@@ -133,12 +133,18 @@
                 $('#formSurvey').on('submit', function(e) {
                     e.preventDefault()
 
-                    // console.log($(this).serializeArray());
-
                     ajax("/input-survey", $(this).serialize()).done((res) => {
-                        console.log(res);
+                        Notiflix.Report.success(
+                            'Survey berhasil disimpan',
+                            'Terima kasih sudah mengisi survey ini.',
+                            'Tutup',
+                            function cb() {
+                                window.location.href = '/input-survey'
+                            });
                     })
                 })
+
+               
             })
         </script>
     @endpush
