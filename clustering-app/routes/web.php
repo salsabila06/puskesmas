@@ -30,6 +30,8 @@ use Illuminate\Support\Facades\Route;
 //     return view('layouts.app');
 // });
 
+Route::get('/cluster', ClusterController::class);
+
 Route::middleware('isLogged')->group(function () {
     Route::get('/', [AuthController::class, 'index'])->name('login');
     Route::get('/daftar', [AuthController::class, 'daftar']);

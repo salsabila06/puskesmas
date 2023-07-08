@@ -100,7 +100,7 @@ class QuestRepository
     {
         try {
             $quest = Quest::with('quest_type')->where('id_quest', $id)->where(function ($q) {
-                $q->where('target', Auth::user()->faskes->faskes_type)->orWhere('target', SEMUA);
+                $q->where('target', Auth::user()->faskes->faskes_type_id)->orWhere('target', SEMUA);
             })->first($this->select);
 
             return $quest;

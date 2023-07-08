@@ -30,16 +30,25 @@ class KMeans
     function initializeCentroidsOld()
     {
 
-        Log::info($this->data);
         $centroid = [];
 
-        for ($i = 0; $i < count($this->data); $i++) {
-            for ($j = 1; $j <= count($this->data[$i]); $j++) {
-                array_push($centroid, $this->data[$i]['data'][$j - 1]);
+        for ($i = 0; $i < count($this->data[0]['data']); $i++) {
+            for ($j = 0; $j < count($this->data); $j++) {
+                $centroid[$i][] = $this->data[$j]['data'][$i];
             }
         }
+        $data = $this->data;
 
-        return $centroid;
+        $sums = [];
+        foreach ($centroid as $key => $value) {
+            array_push($sums, array_sum($value));
+        }
+
+        $newArr = array_map(function ($sum) use ($data) {
+            return $sum / count($data);
+        }, $sums);
+
+        return $newArr;
 
         $this->centroids = $centroid;
         $this->initCentroid = $centroid;
@@ -126,7 +135,7 @@ class KMeans
 
     public function run($maxIterations = 1000)
     {
-        $this->initializeCentroids();
+        $this->centroid_rata_rata();
 
         $iterations = 0;
         $maxIterations = $maxIterations;
@@ -197,9 +206,6 @@ class KMeans
     {
         $clusterMetrics = [];
 
-        $cluster_encode = json_encode($this->clusters);
-
-
         foreach ($this->clusters as $label => $cluster) {
             $inertia = $this->calculateInertia($label);
             $silhouetteCoefficients = [];
@@ -216,11 +222,9 @@ class KMeans
             ];
         }
 
-        uasort($clusterMetrics, function ($a, $b) {
-            return $b['silhouette'] <=> $a['silhouette'];
-        });
-
-        $cluster_encode = json_encode($this->clusters);
+        // uasort($clusterMetrics, function ($a, $b) {
+        //     return $a['silhouette'] <=> $b['silhouette'];
+        // });
 
 
         return $clusterMetrics;
@@ -308,35 +312,98 @@ class KMeans
 
     function result($survey_id)
     {
-        $clusterMetrics = $this->evaluateClusters();
+        $clusterMetrics = $this->swapClusterLabels();
 
 
         $bestClusterLabels = ClusterType::all()->pluck('id_cluster_type')->toArray();
 
-        $inertia = 0;
+
         $result = [];
 
         foreach ($this->clusters as $key => $value) {
 
             foreach ($value as $item) {
-                if ($clusterMetrics[$key]['silhouette'] >= $inertia) {
 
-                    array_push($result, [
-                        'faskes_id' => $item['faskes_id'],
-                        'survey_id' => $survey_id,
-                        'cluster_type_id' => 1
-                    ]);
-                } else {
-                    array_push($result, [
-                        'faskes_id' => $item['faskes_id'],
-                        'survey_id' => $survey_id,
-                        'cluster_type_id' => $bestClusterLabels[$key - 1]
-                    ]);
-                }
+                array_push($result, [
+                    'faskes_id' => $item['faskes_id'],
+                    'survey_id' => $survey_id,
+                    'cluster_type_id' => $bestClusterLabels[$item['label'] - 1],
+                ]);
             }
 
-            $inertia = $clusterMetrics[$key]['silhouette'];
         }
         return  $result;
+    }
+
+    function centroid_rata_rata()
+    {
+        $central = $step = round(sizeof($this->data) / $this->k, 0);
+        $dimensi = sizeof($this->data[0]['data']);
+        $cek = $c = 0;
+        $i = 1;
+        for ($z = 0; $z < sizeof($this->data); $z++) {
+            $temp = [];
+            for ($d = 0; $d < $dimensi; $d++) {
+                $temp[] = $this->data[$z]['data'][$d];
+            }
+            if ((($z % $central) < $central && $z % $central != 0) || $z == 0) {
+                $temp_centroid_awal[$c][$z] = $temp;
+            } else {
+                if ($c + 1 < $this->k) {
+                    $c++;
+                }
+                $temp_centroid_awal[$c][$z] = $temp;
+            }
+        }
+        foreach ($temp_centroid_awal as $key => $value) {
+            $temp = [];
+            foreach ($value as $keys => $values) {
+                for ($d = 0; $d < $dimensi; $d++) {
+                    $temp[$d][] = $temp_centroid_awal[$key][$keys][$d];
+                }
+            }
+            $temps[$key] = $temp;
+        }
+
+        foreach ($temp_centroid_awal as $key => $value) {
+
+            $centroid_awal[$key]['label'] = $i++;
+
+            for ($d = 0; $d < $dimensi; $d++) {
+
+                $centroid_awal[$key]['value'][] = array_sum($temps[$key][$d]) / count($temps[$key][$d]);
+            }
+        }
+
+        $this->centroids = $this->initCentroid  = $centroid_awal;
+    }
+
+    public function swapClusterLabels($evaluationMetric = 'inertia')
+    {
+        $clusterMetrics = $this->evaluateClusters();
+
+
+        if ($evaluationMetric === 'inertia') {
+            uasort($clusterMetrics, function ($a, $b) {
+                return $a['inertia'] < $b['inertia'] ? -1 : 1;
+            });
+        } elseif ($evaluationMetric === 'silhouette') {
+            uasort($clusterMetrics, function ($a, $b) {
+                return $a['silhouette'] <=> $b['silhouette'];
+            });
+        }
+
+
+        $bestClusterLabels = array_keys($clusterMetrics);
+
+
+
+
+        foreach ($this->clusters as $label => &$cluster) {
+            $newLabel = $bestClusterLabels[$label - 1];
+            foreach ($cluster as &$dataPoint) {
+                $dataPoint['label'] = $newLabel;
+            }
+        }
     }
 }

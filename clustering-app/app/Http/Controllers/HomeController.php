@@ -15,6 +15,7 @@ use App\Models\Survey;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class HomeController extends Controller
 {
@@ -66,6 +67,7 @@ class HomeController extends Controller
         $district = $faskes->district;
 
         $quest = [];
+
         foreach ($survey->detail as $key => $value) {
             $newQuest = (new QuestRepository($request))->byFaskesType($value->quest_id);
             if ($newQuest) {
@@ -73,10 +75,8 @@ class HomeController extends Controller
             }
         }
 
-
         $survey->quest = $quest;
         $quest_type = [];
-
 
         foreach ($quest as $key => $value) {
             array_push($quest_type, [
@@ -86,6 +86,7 @@ class HomeController extends Controller
         };
 
         $survey->quest_type = array_unique($quest_type, SORT_REGULAR);
+
 
 
         return view('pages.lets_survey.index', compact('survey', 'faskes', 'district'));

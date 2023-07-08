@@ -30,14 +30,16 @@ class ClusterController extends Controller
 
             $kmeans = new KMeans($data, $k);
 
+            // return $kmeans->centroid_rata_rata();
             $kmeans->run();
-            // $kmeans->displayResults();
+
 
             $cluster = $kmeans->result($request->survey_id);
 
+
             return  Cluster::insert($cluster);
         } catch (\Throwable $th) {
-            return ['message' => $th->getMessage()];
+            return ['message' => $th->getMessage() . $th->getLine()];
         }
     }
 }
