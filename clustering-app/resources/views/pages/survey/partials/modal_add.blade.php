@@ -13,7 +13,7 @@
                     <div class="container-fluid">
                         <div class="form-group">
                             <label for="title">Judul</label>
-                            <textarea type="text" name="title" class="form-control h-100" rows="4" aria-describedby="helpId"></textarea>
+                            <textarea type="text" name="title" class="form-control h-50" rows="1" aria-describedby="helpId"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="date_publish">Tanggal Terbit</label>

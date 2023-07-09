@@ -13,7 +13,7 @@
                     <div class="container-fluid">
                         <div class="form-group">
                             <label for="quest">Pertanyaan</label>
-                            <textarea type="text" name="quest" rows="4" class="form-control h-100 " aria-describedby="helpId"></textarea>
+                            <textarea type="text" name="quest" rows="4" class="form-control h-45 " aria-describedby="helpId"></textarea>
                         </div>
                         <div class="form-group">
                             <label for="quest_type_id">Tipe</label>

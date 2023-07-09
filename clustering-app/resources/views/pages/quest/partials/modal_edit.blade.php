@@ -14,7 +14,7 @@
                         <input type="hidden" id="id_quest" name="id_quest">
                         <div class="form-group">
                             <label for="quest">Pertanyaan</label>
-                            <textarea type="text" name="quest" rows="4" id="quest" class="form-control h-100"
+                            <textarea type="text" name="quest" rows="4" id="quest" class="form-control h-45"
                                 aria-describedby="helpId"></textarea>
                         </div>
                         <div class="form-group">

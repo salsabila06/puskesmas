@@ -14,7 +14,7 @@
                         <input type="hidden" id="id_survey" name="id_survey">
                         <div class="form-group">
                             <label for="title">Judul</label>
-                            <textarea type="text" name="title" id="title" class="form-control h-100" rows="4"
+                            <textarea type="text" name="title" id="title" class="form-control h-45" rows="1"
                                 aria-describedby="helpId"></textarea>
                         </div>
                         <div class="form-group">

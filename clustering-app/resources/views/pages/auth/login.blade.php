@@ -28,8 +28,8 @@
             </button>
         </div>
 
-        <div class="mt-5 text-center">
+        {{-- <div class="mt-5 text-center">
             Belum punya akun? <a href="/daftar">Daftar</a>
-        </div>
+        </div> --}}
     </form>
 @endsection
