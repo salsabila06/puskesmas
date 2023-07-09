@@ -19,8 +19,8 @@
                         </div>
                         <div class="form-group">
                             <label for="date_publish">Tanggal Terbit</label>
-                            <input type="date" min="{{ date('Y-m-d') }}" id="date_publish" name="date_publish"
-                                class="form-control" aria-describedby="helpId">
+                            <input type="date" id="date_publish" name="date_publish" class="form-control"
+                                aria-describedby="helpId">
                         </div>
                     </div>
             </div>

@@ -74,9 +74,6 @@ class SurveyController extends Controller
 
             DB::beginTransaction();
             $survey = (new SurveyRepository($request))->update();
-            $quest = (new QuestRepository($request))->get()->pluck('id_quest');
-            $request->merge(['quest_id' => $quest]);
-            (new SurveyDetailRepository($request))->update();
             DB::commit();
             return ['message' => "Berhasil ubah data", "data" => $survey];
         } catch (\Throwable $th) {
