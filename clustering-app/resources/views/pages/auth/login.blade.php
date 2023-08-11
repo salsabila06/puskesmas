@@ -20,7 +20,7 @@
         </div>
 
         <div class="form-group text-right">
-            <a href="auth-forgot-password.html" class="float-left mt-3">
+            <a href="{{ route('forget.password.get') }}" class="float-left mt-3">
                 Lupa Password?
             </a>
             <button type="submit" class="btn btn-success btn-lg btn-icon icon-right" tabindex="4">

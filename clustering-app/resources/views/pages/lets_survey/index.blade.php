@@ -85,7 +85,7 @@
                                                                 name="{{ $item['quest_type_name'] . $value->id_quest }}"
                                                                 value="1" class="custom-control-input">
                                                             <label class="custom-control-label"
-                                                                for="yes-{{ $item['quest_type_name'] . $value->id_quest }}">YA/ADA</label>
+                                                                for="yes-{{ $item['quest_type_name'] . $value->id_quest }}">Ya/Ada</label>
                                                         </div>
                                                         <div class="custom-control custom-radio">
                                                             <input type="radio"

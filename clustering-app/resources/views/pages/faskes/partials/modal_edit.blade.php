@@ -54,9 +54,9 @@
                         </div>
                         {{-- <div class="form-group">
                             <label for="password" class="control-label">Password</label>
-                            <input type="password" class="form-control" name="password" tabindex="8">
-                        </div>
-                        <div class="form-group">
+                            <input type="password" class="form-control" name="password" id="password" tabindex="8">
+                        </div> --}}
+                        {{-- <div class="form-group">
                             <label for="password_confirmation" class="control-label">Konfimasi Password</label>
                             <input type="password" class="form-control" name="password_confirmation" tabindex="9">
                         </div> --}}

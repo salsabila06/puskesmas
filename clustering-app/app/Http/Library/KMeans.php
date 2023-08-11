@@ -69,6 +69,7 @@ class KMeans
         $this->initCentroid = $centroid;
     }
 
+    //menghitung jarak
     private function calculateEuclideanDistance($point1, $point2)
     {
         $distance = 0;
@@ -80,6 +81,7 @@ class KMeans
         return sqrt($distance);
     }
 
+    //memasukan data kedalam cluster
     public function assignDataToClusters()
     {
         $this->clusters = [];
@@ -155,7 +157,7 @@ class KMeans
             $oldCentroids = $this->centroids;
         }
     }
-
+    
     private function calculateInertia($cluster)
     {
         $centroid = $this->centroids[$cluster - 1]['value'];
@@ -202,6 +204,7 @@ class KMeans
         return ($b - $a) / max($a, $b);
     }
 
+    //perhitungan matrix
     public function evaluateClusters()
     {
         $clusterMetrics = [];
@@ -310,6 +313,7 @@ class KMeans
         echo "Jumlah Perulangan {$this->iteration}";
     }
 
+    //insert data ke databaase
     function result($survey_id)
     {
         $clusterMetrics = $this->swapClusterLabels();
@@ -335,6 +339,7 @@ class KMeans
         return  $result;
     }
 
+    //centroid awal
     function centroid_rata_rata()
     {
         $central = $step = round(sizeof($this->data) / $this->k, 0);
@@ -378,6 +383,7 @@ class KMeans
         $this->centroids = $this->initCentroid  = $centroid_awal;
     }
 
+    //mengurutkan cluster
     public function swapClusterLabels($evaluationMetric = 'inertia')
     {
         $clusterMetrics = $this->evaluateClusters();
