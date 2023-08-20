@@ -10,7 +10,7 @@ Reset Password
 
     <div class="form-group ">
         <label for="email_address">E-Mail Address</label>
-
+       
             <input type="text" id="email_address" class="form-control" name="email"autofocus>
             @if ($errors->has('email'))
                 <span class="text-danger">{{ $errors->first('email') }}</span>

@@ -97,10 +97,18 @@ return [
     | used globally for all e-mails that are sent by your application.
     |
     */
+    'stream' => [
+        'ssl' => [
+            'allow_self_signed' => true,
+            'verity_peer' => false,
+             'verity_peer' => false,
+        ],
+       
+    ],
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'salsabila6645@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'Kelayakan-Puskesmas'),
     ],
 
     /*
@@ -123,3 +131,4 @@ return [
     ],
 
 ];
+
